@@ -93,7 +93,7 @@
         label.lineBreakMode = NSLineBreakByWordWrapping;
 //        label.attributedText = text;
         
-        label.frame = layout.textBoundingRect;
+//        label.frame = layout.textBoundingRect;
         label.textLayout = layout;
         
         [self.view addSubview:label];
@@ -121,8 +121,8 @@
         [label setStyle:kCTUnderlineStyleSingle fromIndex:8 length:7];
        
 
-        CGSize size = [label textBoundingSize];
-        label.frame = CGRectMake(10, 110, size.width, size.height);
+//        CGSize size = [label textBoundingSize];
+//        label.frame = CGRectMake(10, 110, size.width, size.height);
         
         [self.view addSubview:label];
         
@@ -146,7 +146,7 @@
         //设置label的文本
         label.text = self.testSring;
         //label高度自适应
-        [label sizeToFit];
+//        [label sizeToFit];
         [self.view addSubview:label];
     }
     end = CACurrentMediaTime();
@@ -168,7 +168,7 @@
         //设置label的富文本
         label.attributedText = self.testAttributedString;
         //label高度自适应
-        [label sizeToFit];
+//        [label sizeToFit];
         [self.view addSubview:label];
     }
     end = CACurrentMediaTime();
