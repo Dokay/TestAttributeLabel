@@ -37,7 +37,7 @@ pod 'TTTAttributedLabel',           '1.10.1'     # label 显示不同字体
 #pod 'KMCGeigerCounter',             '0.2.2'
 #pod 'ZJScrollPageView',             '0.2.0'
 #pod 'YYKit',                        '1.0.9'
-#pod 'AsyncDisplayKit',              '1.9.90'
+pod 'AsyncDisplayKit',              '1.9.90'
 pod 'YYText'
 
 end

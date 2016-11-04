@@ -10,6 +10,7 @@
 #import "HDPAttributeLabel.h"
 #import "TTTAttributedLabel.h"
 #import "YYText.h"
+#import "ASTextNode.h"
 
 #define KExcuteCount 1
 #define kFrame CGRectMake(10, 110, 400, 150)
@@ -41,13 +42,41 @@
     //添加下划线
     [self.testAttributedString addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(8, 7)];
     
-    [self testArrtibuteLabel];
-//
-    [self testNormalLabel];
-//
-    [self testCoreTextLabel];
+//    [self testArrtibuteLabel];
+////
+//    [self testNormalLabel];
+////
+//    [self testCoreTextLabel];
     
     [self testYYText];
+    
+    [self testAsyncDisplay];
+}
+
+- (void)testAsyncDisplay
+{
+    ASTextNode *textNode = [[ASTextNode alloc] init];
+    textNode.attributedText = self.testAttributedString;
+    textNode.backgroundColor = [UIColor greenColor];
+    textNode.maximumNumberOfLines = 0;
+    CGSize size = [textNode measure:CGSizeMake(kFrame.size.width,FLT_MAX)];
+    
+    NSTimeInterval begin, end;
+    
+    begin = CACurrentMediaTime();
+    for (NSInteger i = 0; i < KExcuteCount; i++) {
+        
+        
+//        textNode.frame = kFrame;
+        
+        
+        textNode.frame = CGRectMake(kFrame.origin.x, kFrame.origin.y, size.width, size.height);
+        
+        [self.view addSubview:textNode.view];
+    }
+    end = CACurrentMediaTime();
+    
+    printf("AsyncDisplay:   %8.2f ms\n", (end - begin) * 1000);
 }
 
 - (void)testYYText
@@ -68,8 +97,6 @@
     
     NSTimeInterval begin, end;
     
-    begin = CACurrentMediaTime();
-    
     YYTextLayout *layout = [YYTextLayout layoutWithContainerSize:(kFrame.size) text:text];
     // get text bounding
     //    layout.textBoundingRect; // get bounding rect
@@ -83,6 +110,8 @@
     [layout rectForRange:[YYTextRange rangeWithRange:NSMakeRange(10,2)]];
     [layout selectionRectsForRange:[YYTextRange rangeWithRange:NSMakeRange(10,2)]];
     
+    begin = CACurrentMediaTime();
+    
     for (NSInteger i = 0; i < KExcuteCount; i++) {
         // 3. Set to YYLabel or YYTextView.
         YYLabel *label = [YYLabel new];
@@ -93,7 +122,7 @@
         label.lineBreakMode = NSLineBreakByWordWrapping;
 //        label.attributedText = text;
         
-//        label.frame = layout.textBoundingRect;
+        label.frame = layout.textBoundingRect;
         label.textLayout = layout;
         
         [self.view addSubview:label];
@@ -121,8 +150,8 @@
         [label setStyle:kCTUnderlineStyleSingle fromIndex:8 length:7];
        
 
-//        CGSize size = [label textBoundingSize];
-//        label.frame = CGRectMake(10, 110, size.width, size.height);
+        CGSize size = [label textBoundingSize];
+        label.frame = CGRectMake(10, 110, size.width, size.height);
         
         [self.view addSubview:label];
         
@@ -146,7 +175,7 @@
         //设置label的文本
         label.text = self.testSring;
         //label高度自适应
-//        [label sizeToFit];
+        [label sizeToFit];
         [self.view addSubview:label];
     }
     end = CACurrentMediaTime();
@@ -168,7 +197,7 @@
         //设置label的富文本
         label.attributedText = self.testAttributedString;
         //label高度自适应
-//        [label sizeToFit];
+        [label sizeToFit];
         [self.view addSubview:label];
     }
     end = CACurrentMediaTime();
