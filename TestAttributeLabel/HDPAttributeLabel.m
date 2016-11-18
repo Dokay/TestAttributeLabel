@@ -3,7 +3,7 @@
 //  HengDaPoints
 //
 //  Created by Dokay on 16/1/22.
-//  Copyright © 2016年 恒大互联网中心. All rights reserved.
+//  Copyright © 2016年 dj226. All rights reserved.
 //
 
 #import "HDPAttributeLabel.h"
